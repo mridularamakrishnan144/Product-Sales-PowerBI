@@ -1,0 +1,50 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "efadfbf2c3858aa69a26",
+  "displayName": "SalesOverview",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "296dc210e93a1ac0ce83",
+      "target": "8793aea634488d1ee320",
+      "type": "DataFilter"
+    },
+    {
+      "source": "296dc210e93a1ac0ce83",
+      "target": "5b99755387550aa03794",
+      "type": "DataFilter"
+    },
+    {
+      "source": "296dc210e93a1ac0ce83",
+      "target": "26304c302e29997aad60",
+      "type": "DataFilter"
+    },
+    {
+      "source": "296dc210e93a1ac0ce83",
+      "target": "1d9300008c3be1271441",
+      "type": "DataFilter"
+    },
+    {
+      "source": "d3f4d1de3ba1d5048872",
+      "target": "8793aea634488d1ee320",
+      "type": "DataFilter"
+    },
+    {
+      "source": "d3f4d1de3ba1d5048872",
+      "target": "5b99755387550aa03794",
+      "type": "DataFilter"
+    },
+    {
+      "source": "d3f4d1de3ba1d5048872",
+      "target": "26304c302e29997aad60",
+      "type": "DataFilter"
+    },
+    {
+      "source": "d3f4d1de3ba1d5048872",
+      "target": "1d9300008c3be1271441",
+      "type": "DataFilter"
+    }
+  ]
+}

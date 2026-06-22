@@ -1,0 +1,93 @@
+table Sales
+	lineageTag: 3b404bcc-4c03-4aaf-917a-814d4356eaec
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: dd225fc7-1354-4e74-982e-7b8c9c021fbd
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c3bddddd-7e6f-44b0-9cf6-12c25e3a9180
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 13c1fead-c1ad-4271-a70d-0337ee7c90f4
+			defaultHierarchy: LocalDateTable_582ba30f-48e1-43e2-a420-1a45e5f55ff2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 462bc6f4-b6da-4c0a-8bff-416e4b2ebeb8
+		summarizeBy: none
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = User
+
+	column 'Unit Price'
+		dataType: double
+		lineageTag: a7e384bb-d2c9-4657-93ec-984a0642d425
+		summarizeBy: none
+		sourceColumn: Unit Price
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sales
+		dataType: double
+		lineageTag: a28618a0-db35-4ee0-a428-93c30aed337e
+		summarizeBy: none
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Cost
+		dataType: double
+		lineageTag: 7ce59be6-55a3-49c5-8275-eafcd34043b2
+		summarizeBy: none
+		sourceColumn: Cost
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 69ab6255-9a72-417e-8335-a164ca3741f0
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\ramakrishnan\EXCEL DATASETS COURSERA\Sales.xlsx"), null, true),
+				    Sales_Sheet = Source{[Item="Sales",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(Sales_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SalesOrderNumber", type text}, {"OrderDate", type date}, {"ProductKey", Int64.Type}, {"ResellerKey", Int64.Type}, {"EmployeeKey", Int64.Type}, {"SalesTerritoryKey", Int64.Type}, {"Quantity", Int64.Type}, {"Unit Price", type number}, {"Sales", type number}, {"Cost", type number}}),
+				    #"Merged Queries" = Table.NestedJoin(#"Changed Type", {"ProductKey"}, Product, {"ProductKey"}, "Product", JoinKind.LeftOuter),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Merged Queries",{"Product", "SalesOrderNumber", "OrderDate", "ProductKey", "ResellerKey", "EmployeeKey", "SalesTerritoryKey", "Quantity", "Unit Price", "Sales", "Cost"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Reordered Columns",{"ResellerKey", "EmployeeKey", "SalesTerritoryKey"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

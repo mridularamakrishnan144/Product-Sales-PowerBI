@@ -1,0 +1,47 @@
+table _Meausres
+	lineageTag: 67f7301b-0657-4200-97eb-f33208a69b09
+
+	measure 'Total Sales' = SUM(Sales[Sales])
+		lineageTag: cc9d498f-af7c-4caf-b8ab-94cdaae7fbad
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Cost' = SUM(Sales[Cost])
+		lineageTag: 90b3b472-40ac-4fe4-9527-dc2abfe6d1a5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Profit' = [Total Sales] - [Total Cost]
+		lineageTag: a429f07d-c391-4467-b10e-ab3c081a46ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Quantity' = SUM(Sales[Quantity])
+		formatString: 0
+		lineageTag: 37fe1672-3f1a-442d-af3d-378dfe0acaec
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales], 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 860c5ab9-c1cf-420f-87cc-f5e3d9e6ebd7
+
+	column Column1
+		dataType: string
+		lineageTag: 2e5f9627-bb25-4465-b24d-ba9a1edd384a
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Meausres = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
