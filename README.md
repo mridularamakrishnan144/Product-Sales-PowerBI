@@ -47,4 +47,12 @@ with DAX measures.
 - Mountain-200 series dominates the top 10 products by sales
 
 
+<img width="1522" height="860" alt="image" src="https://github.com/user-attachments/assets/6f7effe6-25bd-4dc3-bd3d-52b3b30ede58" />
+
+
+<img width="1528" height="861" alt="image" src="https://github.com/user-attachments/assets/78175e99-b795-4237-b50b-d3cda7fdaa87" />
+
+<img width="1531" height="862" alt="image" src="https://github.com/user-attachments/assets/790809aa-a3ee-4adb-8894-959254e9ae5e" />
+
+
 
